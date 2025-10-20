@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Image, StyleSheet } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ThemedText } from '@/components/ThemedText';
 import { Card } from "@/components/Card";
@@ -19,14 +19,14 @@ export default function Index() {
   const [ search, setSearch ] = useState("");
   const [ sortKey, setSortKey ] = useState<"id" | "name">("id");
   const pokemons = data?.pages.flatMap((page) => page.results.map((r) => ({name: r.name, id: getPokemonId(r.url)})) ) ?? [];
-  const filteredPokemons = [...(search 
+  const filteredPokemons = [...(search
     ? pokemons.filter(
-      (pokemon) => 
+      (pokemon) =>
         pokemon.name.includes(search.toLowerCase()) ||
         pokemon.id.toString() === search
-      ) 
+      )
     : pokemons
-  )].sort((a, b) => (a[sortKey] < b[sortKey]? -1 : 1)).slice(0, 
+  )].sort((a, b) => (a[sortKey] < b[sortKey]? -1 : 1)).slice(0,
   n_nationalPoke);
 
   return (
@@ -40,10 +40,10 @@ export default function Index() {
         <SortButton value={sortKey} onChange={setSortKey}/>
       </Row>
       <Card style={styles.body}>
-        <FlatList 
-          data={filteredPokemons} // les données de la liste 
+        <FlatList
+          data={filteredPokemons} // les données de la liste
           numColumns={3} // nombre de colone
-          columnWrapperStyle={styles.gridGap} //style des colones 
+          columnWrapperStyle={styles.gridGap} //style des colones
           contentContainerStyle={[styles.gridGap, styles.list]}//style des lignes
           progressViewOffset={30}
           ListFooterComponent={

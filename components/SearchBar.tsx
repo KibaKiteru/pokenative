@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Row } from "@/components/Row";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -11,7 +11,6 @@ type PropsSearchBar = {
 
 export function SearchBar({value, onChange}: PropsSearchBar) {
     const colors = useThemeColors();
-    const logoHeight = 16;
     return (
         <Row gap={8} style={[styles.wrapper, {backgroundColor: colors.greyWhite}]}>
             <MaterialIcons name="search" size={24} color={colors.tint} />

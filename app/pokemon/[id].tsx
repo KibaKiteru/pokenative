@@ -13,10 +13,11 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { Audio } from 'expo-av';
 import { Image, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
 
 export default function Pokemon() {
     const colors = useThemeColors();
-    const n_nationalPoke = countPokemonNationnal();
+    const [NNationalPoke, setNNationalPoke] = useState(1025);
     const params = useLocalSearchParams()as {id: string, name: string};
     const { data: pokemon } = useFetchPokemon("/pokemon/[id]", {id: params.id});
     const { data: species } = useFetchPokemon("/pokemon-species/[id]", {id: params.id});
@@ -25,6 +26,10 @@ export default function Pokemon() {
     const colorType = mainType ? Colors.type[mainType] : colors.tint;
     const types = pokemon?.types ?? [];
     const bio = species?.flavor_text_entries?.find(({language}) => language.name === "en") ?.flavor_text.replaceAll("\n",". ");
+
+	useEffect(() => {
+		setNNationalPoke(countPokemonNationnal());
+	}, []);
 
     const stats = pokemon?.stats ?? basePokemonStats;
 
@@ -42,7 +47,7 @@ export default function Pokemon() {
         router.replace({pathname: "/pokemon/[id]", params: {id: pokeId}});
     }
     const onNext = () => {
-        let pokeId = Math.min(id + 1, 1025);
+        let pokeId = Math.min(id + 1, NNationalPoke);
         router.replace({pathname: "/pokemon/[id]", params: {id: pokeId}});
     }
 
@@ -67,7 +72,7 @@ export default function Pokemon() {
                             <MaterialIcons name="chevron-left" size={24} color={colors.greyWhite} />
                         </TouchableOpacity> }
                         <TouchableOpacity onPress={onImagePress}>
-                            <Image 
+                            <Image
                                 style={styles.artwork}
                                 source={{uri: getPokemonArtWork(Number.parseInt(params.id))}}
                                 width={200}

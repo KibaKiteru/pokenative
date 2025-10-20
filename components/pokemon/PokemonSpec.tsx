@@ -1,6 +1,5 @@
 import { type ImageSourcePropType, type ViewProps, Image, StyleSheet, View } from "react-native"
 import { Row } from "@/components/Row";
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ThemedText } from "../ThemedText";
 
