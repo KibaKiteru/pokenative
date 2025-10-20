@@ -1,0 +1,2 @@
+# Exclude example/template code from EAS builds
+app-example/

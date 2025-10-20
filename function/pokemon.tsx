@@ -18,9 +18,9 @@ export function formatSize(size?: number): string {
     return (size/10).toString().replace('.', ',') + ' m';
 }
 
-export function countPokemonNationnal() {
+export function countPokemonNationnal(): number {
     const { data: pokemon } = useFetchPokemon("/pokedex/[id]", {id: 1});
-    return pokemon?.pokemon_entries.length;
+    return pokemon?.pokemon_entries.length ?? 1000;
 }
 
 export const basePokemonStats = [

@@ -6,18 +6,16 @@ import { RootView } from "@/components/RootView";
 import { Row } from "@/components/Row";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
-import { formatSize, formatWeight, getPokemonArtWork, basePokemonStats, countPokemonNationnal } from "@/function/pokemon";
+import { formatSize, formatWeight, getPokemonArtWork, basePokemonStats } from "@/function/pokemon";
 import { useFetchPokemon } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { Audio } from 'expo-av';
 import { Image, Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
-import { useEffect, useState } from "react";
 
 export default function Pokemon() {
     const colors = useThemeColors();
-    const [NNationalPoke, setNNationalPoke] = useState(1025);
     const params = useLocalSearchParams()as {id: string, name: string};
     const { data: pokemon } = useFetchPokemon("/pokemon/[id]", {id: params.id});
     const { data: species } = useFetchPokemon("/pokemon-species/[id]", {id: params.id});
@@ -27,9 +25,6 @@ export default function Pokemon() {
     const types = pokemon?.types ?? [];
     const bio = species?.flavor_text_entries?.find(({language}) => language.name === "en") ?.flavor_text.replaceAll("\n",". ");
 
-	useEffect(() => {
-		setNNationalPoke(countPokemonNationnal());
-	}, []);
 
     const stats = pokemon?.stats ?? basePokemonStats;
 
@@ -47,7 +42,7 @@ export default function Pokemon() {
         router.replace({pathname: "/pokemon/[id]", params: {id: pokeId}});
     }
     const onNext = () => {
-        let pokeId = Math.min(id + 1, NNationalPoke);
+        let pokeId = Math.min(id + 1, 1025);
         router.replace({pathname: "/pokemon/[id]", params: {id: pokeId}});
     }
 
